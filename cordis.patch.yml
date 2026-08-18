@@ -1,0 +1,5 @@
+# dsh-excel-kit 插件补丁（cordis 配置 insert 语法）
+# 安装方式：dsh plugin --profile <name> add dsh-excel-kit
+- insert:
+    - id: excel-kit
+      name: 'dsh-excel-kit'
