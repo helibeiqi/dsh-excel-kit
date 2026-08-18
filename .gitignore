@@ -1,0 +1,17 @@
+node_modules/
+lib/
+*.tgz
+*.log
+.DS_Store
+test/fixtures/*.xlsx
+test/fixtures/*.xls
+
+# 临时校验输出与 E2E 截图（不入库）
+build-out.txt
+itest-out.txt
+lib-ts.txt
+pack-out.txt
+spill-check.txt
+unit-out.txt
+verify-fix.txt
+test/*.png
