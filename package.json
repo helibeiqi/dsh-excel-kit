@@ -1,0 +1,58 @@
+{
+  "name": "dsh-excel-kit",
+  "version": "0.1.0",
+  "description": "The most reliable read-only Excel analysis toolkit for dsh (DeepSeek Harness). Streaming xlsx reader (yauzl + sax), describe / filter / pivot tools, big-file safe.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "README.md",
+    "README.zh-CN.md",
+    "LICENSE",
+    "cordis.patch.yml"
+  ],
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "cordis",
+    "excel",
+    "xlsx",
+    "spreadsheet",
+    "analysis",
+    "read-only",
+    "streaming"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc",
+    "test": "tsx --test test/unit.test.ts",
+    "test:integration": "tsx --test test/integration.test.ts",
+    "gen:fixtures": "tsx test/fixtures/generate.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "sax": "^1.4.1",
+    "xlsx": "^0.18.5",
+    "yauzl": "^3.2.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.7",
+    "@types/node": "^22.5.0",
+    "@types/sax": "^1.2.7",
+    "@types/yauzl": "^2.10.3",
+    "@types/yazl": "^2.4.5",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4",
+    "yazl": "^2.5.1"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
