@@ -1,0 +1,46 @@
+name: publish
+
+on:
+  push:
+    branches: [main, master]
+    tags:
+      - 'dsh-excel-kit-v*'
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run gen:fixtures
+      - run: npm test
+      - name: Integration test (large fixture)
+        run: npm run test:integration
+        timeout-minutes: 20
+
+  publish:
+    if: startsWith(github.ref, 'refs/tags/dsh-excel-kit-v')
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
