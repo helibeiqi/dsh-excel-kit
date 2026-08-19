@@ -1,7 +1,7 @@
 {
   "name": "dsh-excel-kit",
   "version": "0.1.0",
-  "description": "The most reliable read-only Excel analysis toolkit for dsh (DeepSeek Harness). Streaming xlsx reader (yauzl + sax), describe / filter / pivot tools, big-file safe.",
+  "description": "Read-only Excel analysis toolkit for dsh (DeepSeek Harness). Streaming xlsx reader (yauzl + sax), describe / filter / pivot tools, big-file safe.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [

@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 """dsh web E2E：发起对话，让模型调用 excel_describe 分析 small.xlsx"""
-import sys, json, time
+import os, sys, json, time
 from playwright.sync_api import sync_playwright
 
 URL = "http://127.0.0.1:3080"
-BASE = r"C:\Users\ethan.he\WorkBuddy\2026-08-18-09-23-32\dsh-excel-kit"
-XLSX = BASE + r"\test\fixtures\small.xlsx"
-SHOT1 = BASE + r"\test\e2e-01-home.png"
-SHOT2 = BASE + r"\test\e2e-02-sent.png"
-SHOT3 = BASE + r"\test\e2e-03-result.png"
+# 仓库根目录 = test/ 的上一级；用相对路径定位 fixture 与截图，换机器可跑
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+XLSX = os.path.join(BASE, "test", "fixtures", "small.xlsx")
+SHOT1 = os.path.join(BASE, "test", "e2e-01-home.png")
+SHOT2 = os.path.join(BASE, "test", "e2e-02-sent.png")
+SHOT3 = os.path.join(BASE, "test", "e2e-03-result.png")
 PROMPT = ("请使用 excel_describe 工具分析这个 Excel 文件：" + XLSX +
           "。请调用工具并告诉我：sheet 列表、总行数、总列数、每列的空值率，以及数值列的 min/max/mean。")
 

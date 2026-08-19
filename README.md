@@ -1,6 +1,6 @@
 # dsh-excel-kit
 
-**The most reliable read-only Excel analysis toolkit for dsh (DeepSeek Harness).**
+**A read-only Excel analysis toolkit for dsh (DeepSeek Harness).**
 
 One sentence of value: stream any xlsx, however large, into compact, useful analysis (describe / filter / pivot) — without ever loading the whole workbook into memory, and without ever writing or formatting a cell.
 
@@ -8,7 +8,7 @@ One sentence of value: stream any xlsx, however large, into compact, useful anal
 
 ---
 
-## Features (3–5 core)
+## Features
 
 1. **Streaming, big-file safe** — a home-grown xlsx reader built on `yauzl` (streaming zip) + `sax` (streaming XML). No `XLSX.readFile`, no whole-workbook load, no OOM on 100 MB+ files.
 2. **Three focused read tools** — `excel_describe`, `excel_filter`, `excel_pivot`. They return **compact JSON** (aggregates, samples, matched rows) — never a firehose of raw rows.
@@ -32,7 +32,7 @@ The plugin is a normal dsh plugin: entry exports `name` / `inject` / `apply` and
 | `dsh.bundle` in `package.json` | Declares `cordis.patch.yml` so `dsh plugin --profile <name> add dsh-excel-kit` injects the `excel-kit` entry into the profile config. |
 | `ctx.excel` (potential future service) | The `XlsxStreamReader` is exported so a future provider service can reuse the same streaming engine cross-plugin. (Not yet registered as a service.) |
 
-### The streaming reader (the moat)
+### The streaming reader
 
 - `yauzl` opens the file with `lazyEntries` and reads the central directory — no whole-file decompression.
 - `xl/sharedStrings.xml` (when present) is parsed into a **chunked, spilled string array**: strings accumulate into a chunk, and when a chunk crosses 8 MB it is flushed to a temp file; random access goes through a small LRU cache of on-disk chunks. Memory stays bounded even for huge shared-string tables.
@@ -208,7 +208,7 @@ Result shape:
 | Fixtures | `npm run gen:fixtures` | small.xlsx ~1 MB + large.xlsx ~100 MB generated streaming | **PASS** small.xlsx 1,725,588 B (~1.65 MiB); large.xlsx 139,715,025 B (~133.2 MiB) |
 | Integration | `npm run test:integration` | 1 MB vs 100 MB timing; peak RSS delta `< 800 MB`; three tools usable on 100 MB; compact JSON results | **PASS** 6/6. describe large 26.9s / RSS +153.2 MB / JSON 2215 B; filter large 20.9s / +63.6 MB (matched 63,228); pivot large 21.8s / +36.2 MB; SST-chunk spill case 34.3s / +5.9 MB |
 
-Numbers recorded by QA (2026-08-18) from independent verification runs.
+Numbers recorded 2026-08-18.
 
 ---
 

@@ -1,6 +1,6 @@
 # dsh-excel-kit
 
-**dsh（DeepSeek Harness）下"最稳的 Excel 只读分析工具"。**
+**dsh（DeepSeek Harness）下的 Excel 只读分析工具。**
 
 一句话价值：无论多大的 xlsx，都能以流式方式产出紧凑、可用的分析结果（describe / filter / pivot）——既不把整个工作簿读进内存，也绝不写入或格式化任何一个单元格。
 
@@ -8,7 +8,7 @@
 
 ---
 
-## 核心特性（3–5 条）
+## 核心特性
 
 1. **流式、大文件零崩溃** —— 基于 `yauzl`（流式解压 zip）+ `sax`（流式 XML）自研 xlsx 读取器，**不调用 `XLSX.readFile`**，不做全表加载，100MB+ 文件不会 OOM。
 2. **三个专注的只读工具** —— `excel_describe` / `excel_filter` / `excel_pivot`，返回**紧凑 JSON**（聚合、示例值、命中行），绝不把原始行倾泻给模型。
@@ -32,7 +32,7 @@
 | `package.json` 的 `dsh.bundle` | 声明 `cordis.patch.yml`，`dsh plugin --profile <name> add dsh-excel-kit` 时把 `excel-kit` 条目注入 profile 配置。 |
 | `ctx.excel`（潜在扩展服务） | 导出 `XlsxStreamReader`，未来可把同一流式引擎以 provider 服务形式跨插件复用（当前尚未注册为服务）。 |
 
-### 流式读取器（护城河）
+### 流式读取器
 
 - `yauzl` 以 `lazyEntries` 打开文件并读取中央目录——不做全文件解压。
 - `xl/sharedStrings.xml`（如存在）解析进**分块 spill 字符串数组**：字符串累积到 8MB 一块即落盘临时文件，随机访问走小规模 LRU 缓存。超大共享字符串表内存仍然有界。

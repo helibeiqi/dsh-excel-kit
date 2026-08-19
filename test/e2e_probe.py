@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """dsh web UI 探测：打开页面、截图、提取文本结构"""
-import sys, json
+import os, sys, json
 from playwright.sync_api import sync_playwright
 
 URL = "http://127.0.0.1:3080"
-SHOT = r"C:\Users\ethan.he\WorkBuddy\2026-08-18-09-23-32\dsh-excel-kit\test\e2e-01-home.png"
+SHOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "e2e-01-home.png")
 
 with sync_playwright() as p:
     try:

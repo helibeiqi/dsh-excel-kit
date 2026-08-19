@@ -41,7 +41,9 @@ async function probe(name, fn) {
 }
 
 (async () => {
-  const XLSX = 'C:/Users/ethan.he/WorkBuddy/2026-08-18-09-23-32/dsh-excel-kit/test/fixtures/small.xlsx';
+  const path = require('path');
+  // 相对脚本位置定位 fixture，避免硬编码本机路径（换机器可跑）
+  const XLSX = path.join(__dirname, 'fixtures', 'small.xlsx');
   await probe('describe(small)', () => executeDescribe({ file_path: XLSX }));
   await probe('filter(small,age>20)', () => executeFilter({ file_path: XLSX, conditions: [{ column: 'age', op: 'gt', value: 20 }], limit: 10 }));
   await probe('pivot(small,dept)', () => executePivot({ file_path: XLSX, rows: ['dept'], values: [{ column: 'age', agg: 'mean' }] }));
